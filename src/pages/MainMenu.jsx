@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import spotifyIcon from "../assets/spotify-icon.png";
 import { PlayIcon } from "@heroicons/react/24/solid";
+import { useSpotifyContext } from "../SpotifyProvider";
+import FallbackAvatarImg from "../assets/fallback-avatar.png";
 
 export default function MainMenu() {
+  const { sdk } = useSpotifyContext();
+  const [userDetails, setUserDetails] = useState({
+    name: "User",
+    profileImage: FallbackAvatarImg,
+  });
+
+  useEffect(() => {
+    (async () => {
+      const user = await sdk?.currentUser.profile();
+      if (user) {
+        setUserDetails({
+          name: user?.display_name || "User",
+          profileImage: user?.images[0]?.url || FallbackAvatarImg,
+        });
+      }
+    })();
+  }, []);
+
   return (
     <div className='container h-screen flex flex-col justify-around mx-auto'>
       <header className='flex justify-between items-center'>
         <div className='flex'>
           <h2 className='font-title text-2xl me-2'>Musical Mystery</h2>
-          <span className='inline-flex items-center rounded-md bg-none px-3 py-1 text-xs font-medium text-white ring-1 ring-inset ring-light-green'>
-            Beta
-          </span>
         </div>
         <div className='flex items-center'>
-          <p>Hi Tom Cook!</p>
+          <p>Hi {userDetails.name}!</p>
           <img
-            className='h-10 w-10 rounded-full ms-4'
-            src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+            className='h-10 w-10 rounded-full ms-4 object-cover object-center'
+            src={userDetails.profileImage}
             alt='User spotify profile image'
           />
         </div>
