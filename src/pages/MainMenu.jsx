@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import spotifyIcon from "../assets/spotify-icon.png";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import { useSpotifyContext } from "../SpotifyProvider";
+import { useSpotifyContext } from "../context/SpotifyProvider";
 import FallbackAvatarImg from "../assets/fallback-avatar.png";
+import { useNavigate } from "react-router-dom";
 
 export default function MainMenu() {
   const { sdk } = useSpotifyContext();
@@ -11,6 +12,7 @@ export default function MainMenu() {
     profileImage: FallbackAvatarImg,
   });
   const [play, setPlay] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -26,7 +28,7 @@ export default function MainMenu() {
         }
       }
     })();
-  }, []);
+  }, [sdk]);
 
   return (
     <div className='container h-screen flex flex-col justify-around mx-auto'>

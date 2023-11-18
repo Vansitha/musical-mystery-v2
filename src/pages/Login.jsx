@@ -24,7 +24,7 @@ const Login = () => {
   const goToMainMenuHandler = async () => {
     // Called for the second time after login redirect back to app to get SDK instance
     await triggerAuth();
-    navigate(MAIN_MENU);
+    navigate(MAIN_MENU, { replace: true });
   };
 
   useEffect(() => {

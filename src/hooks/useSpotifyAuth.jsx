@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useSpotifyContext } from "../SpotifyProvider";
+import { useSpotifyContext } from "../context/SpotifyProvider";
 import {
   SpotifyApi,
   AuthorizationCodeWithPKCEStrategy,
