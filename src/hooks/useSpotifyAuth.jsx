@@ -8,7 +8,7 @@ import {
 export default function useSpotifyAuth() {
   const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
   const redirectUrl = import.meta.env.VITE_REDIRECT_TARGET;
-  const scopes = ["streaming", "user-read-email"];
+  const scopes = ["streaming", "user-read-email", "user-read-private"];
 
   const { current: activeScopes } = useRef(scopes);
   const { setSpotifySdk } = useSpotifyContext();
@@ -28,7 +28,6 @@ export default function useSpotifyAuth() {
       if (authenticated) {
         setSpotifySdk(internalSdk);
       }
-
     } catch (e) {
       const error = e;
       if (
@@ -36,10 +35,7 @@ export default function useSpotifyAuth() {
         error.message &&
         error.message.includes("No verifier found in cache")
       ) {
-        console.error(
-          "If you are seeing this error in a React Development Environment it's because React calls useEffect twice. Using the Spotify SDK performs a token exchange that is only valid once, so React re-rendering this component will result in a second, failed authentication. This will not impact your production applications (or anything running outside of Strict Mode - which is designed for debugging components).",
-          error
-        );
+        console.error(error);
       } else {
         console.error(e);
       }

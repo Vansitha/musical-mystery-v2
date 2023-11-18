@@ -10,6 +10,7 @@ export default function MainMenu() {
     name: "User",
     profileImage: FallbackAvatarImg,
   });
+  const [play, setPlay] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -19,6 +20,10 @@ export default function MainMenu() {
           name: user?.display_name || "User",
           profileImage: user?.images[0]?.url || FallbackAvatarImg,
         });
+
+        if (user.product === "premium") {
+          setPlay(true);
+        }
       }
     })();
   }, []);
