@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { useSpotifyContext } from "../context/SpotifyProvider";
 import FallbackAvatarImg from "../assets/fallback-avatar.png";
 import MenuNav from "../components/MenuNav";
@@ -44,7 +44,7 @@ export default function MainMenu() {
     <div className='container h-screen flex flex-col justify-around mx-auto'>
       <Header username={userDetails.name} image={userDetails.profileImage} />
       <MenuNav isPlay={play} />
-      <Footer displayPosition={"start"} />
+      <Footer displayPosition={"start"} enableMenuCallBack={false} />
     </div>
   );
 }

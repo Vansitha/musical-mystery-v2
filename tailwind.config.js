@@ -7,6 +7,7 @@ export default {
       "light-green": "#1ED760",
       white: "#FFFFFF",
       black: "#191414",
+      red: "#FB4D4D",
     },
     fontFamily: {
       title: ["Lobster", "sans-serif"],
