@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import useSpotifyAuth from "../hooks/useSpotifyAuth";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +66,7 @@ const Login = () => {
       <p className='mt-28 text-xs'>
         Note: Requires a
         <span className='font-bold text-light-green'> Spotify </span> Premium
-        subscription to play
+        subscription for music playback
       </p>
       <Toaster position='top-center' reverseOrder={false} />
     </div>

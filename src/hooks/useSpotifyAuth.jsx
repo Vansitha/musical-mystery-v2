@@ -8,8 +8,13 @@ import {
 export default function useSpotifyAuth() {
   const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
   const redirectUrl = import.meta.env.VITE_REDIRECT_TARGET;
-  const scopes = ["streaming", "user-read-email", "user-read-private"];
-
+  const scopes = [
+    "user-read-playback-state",
+    "streaming",
+    "user-read-email",
+    "user-read-private",
+    "user-modify-playback-state",
+  ];
   const { current: activeScopes } = useRef(scopes);
   const { setSpotifySdk } = useSpotifyContext();
 

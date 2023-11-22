@@ -10,7 +10,7 @@ export default function ToggleButton({ text, state, callback }) {
       }`}
       onClick={callback}
     >
-      <span className='font-extrabold text-xl'>{text}</span>
+      <span className='font-bold text-xl'>{text}</span>
     </button>
   );
 }
