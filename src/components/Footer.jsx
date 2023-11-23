@@ -1,13 +1,20 @@
-import React from "react";
 import spotifyIcon from "../assets/spotify-icon.png";
 import { Link } from "react-router-dom";
 
-export default function Footer({ displayPosition, enableMenuCallBack }) {
+export default function Footer({
+  displayPosition,
+  enableMenuCallBack,
+  callbackHanlder,
+}) {
   return (
     <footer className={`flex justify-${displayPosition}`}>
       {enableMenuCallBack && (
         <>
-          <Link className='underline opacity-80' to='/main-menu'>
+          <Link
+            onClick={callbackHanlder}
+            className='underline opacity-80'
+            to='/main-menu'
+          >
             Back to Game Menu
           </Link>
           <p>&nbsp; | &nbsp;</p>

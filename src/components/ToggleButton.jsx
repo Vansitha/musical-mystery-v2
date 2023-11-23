@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 export default function ToggleButton({ text, state, callback }) {
   return (
     <button
@@ -8,7 +6,9 @@ export default function ToggleButton({ text, state, callback }) {
           ? "bg-light-green text-white"
           : "bg-white text-black hover:bg-light-green hover:text-white"
       }`}
-      onClick={callback}
+      onClick={() => {
+        callback(text);
+      }}
     >
       <span className='font-bold text-xl'>{text}</span>
     </button>

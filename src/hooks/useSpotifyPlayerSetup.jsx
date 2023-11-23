@@ -1,12 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const AUTH_TOKEN_KEY = "spotify-sdk:AuthorizationCodeWithPKCEStrategy:token";
 
+/*
+ * Injects the Spotify Player SDK directly into the dom, registers player
+ * with spotify API and returns the registered device id.
+ */
 export default function useSpotifyPlayerSetup() {
   const [deviceId, setDeviceId] = useState(null);
-  const player = useRef(null);
+  const [player, setPlayer] = useState(null);
 
   useEffect(() => {
+    if (player) return;
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -29,17 +34,22 @@ export default function useSpotifyPlayerSetup() {
         setDeviceId(device_id);
       });
 
+      player.addListener("player_state_changed", (state) => {
+        console.log(state);
+      });
+      
+      player.addListener("not_ready", ({ device_id }) => {
+        console.log("Device ID has gone offline", device_id);
+      });
+
       const connected = await player.connect();
       if (connected) {
-        console.log("connected");
-        player.current = player;
+        setPlayer(player);
       }
     };
 
     return () => {
-      (async () => {
-        await player?.disconnect();
-      })();
+      console.log(player);
       document.body.removeChild(script);
     };
   }, []);

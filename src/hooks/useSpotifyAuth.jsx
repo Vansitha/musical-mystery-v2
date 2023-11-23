@@ -32,6 +32,7 @@ export default function useSpotifyAuth() {
 
       if (authenticated) {
         setSpotifySdk(internalSdk);
+
       }
     } catch (e) {
       const error = e;
