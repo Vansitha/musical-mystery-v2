@@ -1,10 +1,17 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ username, image }) {
+  const navigate = useNavigate();
+
   return (
     <header className='flex justify-between items-center'>
       <div className='flex'>
-        <h2 className='font-title text-2xl me-2'>Musical Mystery</h2>
+        <h2
+          className='me-2 font-semibold hover:cursor-pointer'
+          onClick={() => navigate("/main-menu")}
+        >
+          Musical Mystery
+        </h2>
       </div>
       <div className='flex items-center'>
         <p>Hi {username}!</p>

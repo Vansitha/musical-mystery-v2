@@ -32,7 +32,7 @@ export default function GameScreen() {
 
   useEffect(() => {
     if (startGame === false && !tracks.correctTrack.id) return;
-    
+
     intervalId.current = setInterval(() => {
       setCountDown((prev) => prev - 1);
 
@@ -77,7 +77,7 @@ export default function GameScreen() {
         clearInterval(intervalId.current);
         setLives(newLives);
         setInterval(() => {
-          navigate("/game-over", { replace: true });
+          navigate("/game-over", { replace: true, state: { score } });
         }, 4000);
         return;
       }

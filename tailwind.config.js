@@ -5,6 +5,8 @@ export default {
     colors: {
       "dark-green": "#1DB954",
       "light-green": "#1ED760",
+      jade: "#1DA67C",
+      "light-jade": "#1ED79F",
       white: "#FFFFFF",
       black: "#191414",
       red: "#FB4D4D",
