@@ -14,7 +14,7 @@ export default function Header({ username, image }) {
         </h2>
       </div>
       <div className='flex items-center'>
-        <p>Hi {username}!</p>
+        <p>{username && `Hi ${username}`}</p>
         <img
           className='h-10 w-10 rounded-full ms-4 object-cover object-center'
           src={image}

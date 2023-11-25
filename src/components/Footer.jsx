@@ -5,9 +5,10 @@ export default function Footer({
   displayPosition,
   enableMenuCallBack,
   callbackHanlder,
+  className,
 }) {
   return (
-    <footer className={`flex justify-${displayPosition}`}>
+    <footer className={`flex justify-${displayPosition} ${className}`}>
       {enableMenuCallBack && (
         <>
           <Link

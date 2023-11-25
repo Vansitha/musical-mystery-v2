@@ -19,7 +19,7 @@ function App() {
           <Route path='/play' element={<GameScreen />} />
           <Route path='/leaderboard' element={<Leaderboard />} />
           <Route path='/settings' element={<Settings />} />
-          <Route path='/instructions' element={<Instructions />} />
+          <Route path='/how-to-play' element={<Instructions />} />
           <Route path='/game-over' element={<GameOver />} />
         </Route>
         <Route path='*' element={<ErrorPage />} />
