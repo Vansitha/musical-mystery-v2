@@ -11,6 +11,7 @@ export default {
       black: "#191414",
       red: "#FB4D4D",
       gray: "#262020",
+      "light-gray": "#3A3A3A",
     },
     fontFamily: {
       title: ["Lobster", "sans-serif"],

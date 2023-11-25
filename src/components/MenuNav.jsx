@@ -1,4 +1,3 @@
-import React from "react";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import MenuNavOption from "./MenuNavOption";
 import { useNavigate } from "react-router-dom";
