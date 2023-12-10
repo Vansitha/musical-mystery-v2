@@ -83,7 +83,7 @@ export default function Login() {
 
 const customStrokeStyle = {
   outlineText: {
-    WebkitTextStroke: "5px #1ED79F",
+    WebkitTextStroke: "3px #1ED79F",
     WebkitTextFillColor: "transparent",
   },
 };

@@ -5,6 +5,7 @@ import MenuNav from "../components/MenuNav";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { BlobEffect } from "../components/BlobEffects";
+import { createUser } from "../firebase/leaderboard";
 
 /**
  * Main menu component displaying user details, navigation menu, and footer.
@@ -26,6 +27,7 @@ export default function MainMenu() {
             name: user?.display_name,
             profileImage: user?.images[0]?.url || FallbackAvatarImg,
           });
+          await createUser(user.email, user.display_name, user.country);
 
           // Set 'play' to true if the user has a premium account
           if (user.product === "premium") {

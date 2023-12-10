@@ -8,10 +8,10 @@ const AUTH_TOKEN_KEY = "spotify-sdk:AuthorizationCodeWithPKCEStrategy:token";
  */
 export default function useSpotifyPlayerSetup() {
   const [deviceId, setDeviceId] = useState(null);
-  const [player, setPlayer] = useState(null);
 
   useEffect(() => {
-    if (player) return;
+    let spotifyPlayer = null;
+    if (spotifyPlayer) return;
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
@@ -44,12 +44,12 @@ export default function useSpotifyPlayerSetup() {
 
       const connected = await player.connect();
       if (connected) {
-        setPlayer(player);
+        spotifyPlayer = player;
       }
     };
 
     return () => {
-      console.log(player);
+      console.log(spotifyPlayer);
       document.body.removeChild(script);
     };
   }, []);
