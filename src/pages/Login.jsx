@@ -46,10 +46,10 @@ export default function Login() {
 
   return (
     <div className='container mx-auto h-screen flex flex-col items-center justify-center'>
-      <h1 className='text-9xl mb-11 font-extrabold italic'>
+      <h1 className='text-4xl md:text-9xl mb-11 font-extrabold italic'>
         Musical <span style={customStrokeStyle.outlineText}>Mystery</span>
       </h1>
-      <h2 className='mt-10 text-2xl'>
+      <h2 className='text-center text-sm md:mt-10 md:text-2xl'>
         {isLoggedIn ? (
           <>
             Ready to rock! Your
@@ -65,11 +65,11 @@ export default function Login() {
         )}
       </h2>
       <Button
-        styles='mt-10 w-80'
+        styles='mt-5 md:mt-10 md:w-80'
         text={isLoggedIn ? "Game Menu" : "Connect"}
         callback={isLoggedIn ? goToMainMenuHandler : loginHandler}
       />
-      <p className='mt-28 text'>
+      <p className='absolute bottom-0 text-xs mb-5 px-10 text-center'>
         Note: Requires a
         <span className='font-bold text-light-green'> Spotify </span> Premium
         subscription for music playback

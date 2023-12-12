@@ -15,7 +15,7 @@ export function BlobEffect({ position, style }) {
       }}
       transition={{ repeat: Infinity, duration: 30, ease: "linear" }} // Adjust duration for a full rotation
       style={circleStyles[style] || styleRedBlue}
-      className={`rounded-full bg-jade fixed -z-10 ${position}`}
+      className={`rounded-full fixed -z-10 ${position}`}
     />
   );
 }
