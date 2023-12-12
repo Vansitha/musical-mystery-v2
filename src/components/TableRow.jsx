@@ -1,4 +1,3 @@
-import React from "react";
 
 export default function TableRow({
   rank,
@@ -6,11 +5,10 @@ export default function TableRow({
   country,
   totalGamesPlayed,
   highestScore,
-  isGray,
-  isUser,
+  color,
 }) {
   return (
-    <tr className={isUser ? "bg-jade" : isGray ? "bg-gray" : "bg-black"}>
+    <tr className={`border-b border-test ${color} bg-opacity-30`}>
       <th
         scope='row'
         className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'

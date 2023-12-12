@@ -1,11 +1,33 @@
 import Footer from "../components/Footer";
 import { BlobEffect } from "../components/BlobEffects";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
+import { getHigestScore } from "../firebase/leaderboard";
+import { useSpotifyContext } from "../context/SpotifyProvider";
 
 export default function GameOver() {
-  // TODO: Get highest score from the database
-  // TODO: Show the leaderboard also
+  const { sdk } = useSpotifyContext();
+  const [highScore, setHighScore] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    async function getScore() {
+      const user = await sdk?.currentUser.profile();
+      if (user) {
+        const score = await getHigestScore(user.email);
+        setHighScore(score);
+      }
+    }
+    // Get the score from previous screen
+    console.log(location);
+    if (location.state) {
+      setCurrentScore(location.state.score);
+    }
+
+    getScore();
+  }, [sdk]);
 
   return (
     <div className='container h-screen flex flex-col justify-around mx-auto'>
@@ -13,10 +35,11 @@ export default function GameOver() {
         <div className='font-bold text-7xl '>Game Over</div>
         <div className='my-10'>
           <div className='font-medium text-4xl mb-3'>
-            Your Score: <span className='text-light-jade font-bold '>100</span>
+            Your Score: <span className='text-light-jade font-bold '>{currentScore}</span>
           </div>
           <div className='font-medium text-4xl'>
-            High Score: <span className='text-light-jade font-bold'>800</span>
+            High Score:{" "}
+            <span className='text-light-jade font-bold'>{highScore}</span>
           </div>
         </div>
         <>
@@ -24,13 +47,13 @@ export default function GameOver() {
             <div className='font-medium text-2xl'>
               See how you rank against other players
             </div>
-              <Link
-                to='/leaderboard'
-                className='text-2xl mt-4 flex justify-center items-center'
-              >
-                <p>View Leaderboard</p>
-                  <ArrowRightIcon className='h-6 w-6 ms-2 inline-block' />
-              </Link>
+            <Link
+              to='/leaderboard'
+              className='text-2xl mt-4 flex justify-center items-center'
+            >
+              <p>View Leaderboard</p>
+              <ArrowRightIcon className='h-6 w-6 ms-2 inline-block' />
+            </Link>
           </div>
         </>
       </div>

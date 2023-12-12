@@ -8,22 +8,8 @@ export default function Modal() {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
   return (
     <>
-      <div className='fixed inset-0 flex items-center justify-center'>
-        <button
-          type='button'
-          onClick={openModal}
-          className='rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75'
-        >
-          Open dialog
-        </button>
-      </div>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={closeModal}>
           <Transition.Child
@@ -52,24 +38,24 @@ export default function Modal() {
                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
                     as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
+                    className='text-2xl font-bold leading-6 text-gray'
                   >
                     Spotify Preimum Required
                   </Dialog.Title>
-                  <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>
-                      You need to have Spotify Premium to play the game. Please
-                      upgrade your account to continue.
+                  <div className='mt-3'>
+                    <p className='text-gray font-medium'>
+                      Upgrade or log in with another account to keep the good
+                      vibes rollin'!
                     </p>
                   </div>
 
-                  <div className='mt-4'>
+                  <div className='mt-5'>
                     <button
                       type='button'
-                      className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                      className='inline-flex justify-center rounded-md border border-transparent bg-jade px-4 py-2 font-medium text-white hover:bg-gray focus:outline-none focus-visible:ring-2 focus-visible:ring-jade focus-visible:ring-offset-2'
                       onClick={closeModal}
                     >
-                      Got it, will do!
+                      Okay, Got it!
                     </button>
                   </div>
                 </Dialog.Panel>

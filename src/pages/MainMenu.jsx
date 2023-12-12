@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { BlobEffect } from "../components/BlobEffects";
 import { createUser } from "../firebase/leaderboard";
+import Modal from "../components/Modal";
 
 /**
  * Main menu component displaying user details, navigation menu, and footer.
@@ -17,6 +18,7 @@ export default function MainMenu() {
     profileImage: FallbackAvatarImg,
   });
   const [play, setPlay] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -32,6 +34,8 @@ export default function MainMenu() {
           // Set 'play' to true if the user has a premium account
           if (user.product === "premium") {
             setPlay(true);
+          } else {
+            setShowModal(true);
           }
         }
       } catch (error) {
@@ -45,6 +49,7 @@ export default function MainMenu() {
 
   return (
     <div className='container h-screen flex flex-col justify-around mx-auto'>
+      {showModal && <Modal />}
       <Header username={userDetails.name} image={userDetails.profileImage} />
       <MenuNav isPlay={play} />
       <Footer displayPosition={"start"} enableMenuCallBack={false} />

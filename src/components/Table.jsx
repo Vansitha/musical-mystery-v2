@@ -1,10 +1,44 @@
 import TableRow from "./TableRow";
 
+const rankColors = {
+  1: { color: "bg-gold", medalEmoji: "🥇" },
+  2: { color: "bg-silver", medalEmoji: "🥈" },
+  3: { color: "bg-bronze", medalEmoji: "🥉" },
+};
+
+const userRankColor = "bg-black";
+
 export default function Table({ data, className }) {
+  function populateCards(users) {
+    return users.map((user) => {
+      let cardColor = "";
+      let medalEmoji = "";
+      if (rankColors.hasOwnProperty(user.rank)) {
+        cardColor = rankColors[user.rank].color;
+        medalEmoji = rankColors[user.rank].medalEmoji;
+      }
+      if (user.isUserRank && cardColor != "") {
+        cardColor = userRankColor;
+      }
+
+      return (
+        <TableRow
+          key={user.rank}
+          rank={medalEmoji ? `${user.rank} ${medalEmoji}` : user.rank}
+          playerName={user.name}
+          country={user.country}
+          totalGamesPlayed={user.totalGamesPlayed}
+          highestScore={user.highScore}
+          color={cardColor}
+        />
+      );
+    });
+  }
+
   return (
     <div className={`relative overflow-x-auto w-full ${className}`}>
-      <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-        <thead className='text-xs text-gray-700 uppercase bg-jade dark:text-black'>
+      <table className='w-full text-sm text-left'>
+        <thead className='text-xs text-gray-700 uppercase dark:text-white'>
           <tr>
             <th scope='col' className='px-6 py-3'>
               Rank
@@ -23,88 +57,7 @@ export default function Table({ data, className }) {
             </th>
           </tr>
         </thead>
-        <tbody>
-          <TableRow
-            rank={"1 🥇"}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={false}
-          />
-          <TableRow
-            rank={"2 🥈"}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={true}
-          />
-          <TableRow
-            rank={"3 🥉"}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={false}
-          />
-          <TableRow
-            rank={"4"}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={true}
-          />
-          <TableRow
-            rank={5}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={false}
-          />
-          <TableRow
-            rank={6}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={true}
-          />
-          <TableRow
-            rank={7}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={false}
-          />
-          <TableRow
-            rank={8}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={true}
-          />
-          <TableRow
-            rank={9}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={false}
-          />
-          <TableRow
-            rank={10}
-            playerName='Vansitha Ratnayake'
-            country='Sri Lanka'
-            totalGamesPlayed='10'
-            highestScore='100'
-            isGray={true}
-          />
-        </tbody>
+        <tbody>{populateCards(data)}</tbody>
       </table>
     </div>
   );

@@ -12,6 +12,10 @@ export default {
       red: "#FB4D4D",
       gray: "#262020",
       "light-gray": "#3A3A3A",
+      test: "#A4A9AD",
+      gold: "#FDEE64",
+      silver: "#DEE2FF",
+      bronze: "#FB4D4D",
     },
     fontFamily: {
       title: ["Lobster", "sans-serif"],
