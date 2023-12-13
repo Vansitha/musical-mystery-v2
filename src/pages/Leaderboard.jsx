@@ -25,7 +25,10 @@ export default function Leaderboard() {
         </p>
       </div>
       <Table data={leaderboardData} />
-      <Footer className='mt-20 mb-5 pb-3' enableMenuCallBack={true} />
+      <Footer
+        className='absolute bottom-0 mt-20 mb-5 pb-3'
+        enableMenuCallBack={true}
+      />
       <BlobEffect position='-top-64 -left-64' style='style-1' />
       <BlobEffect position='top-52 -right-96' style='style-2' />
     </div>
