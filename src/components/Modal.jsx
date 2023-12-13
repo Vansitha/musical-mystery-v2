@@ -1,11 +1,25 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 
-export default function Modal() {
+export default function Modal({
+  heading,
+  body,
+  btnText,
+  btnHandler,
+  btnHoverColor,
+}) {
   let [isOpen, setIsOpen] = useState(true);
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function handleBtnClick() {
+    if (btnHandler) {
+      btnHandler();
+    }
+    closeModal();
   }
 
   return (
@@ -23,7 +37,6 @@ export default function Modal() {
           >
             <div className='fixed inset-0 bg-black/60' />
           </Transition.Child>
-
           <div className='fixed inset-0 overflow-y-auto'>
             <div className='flex min-h-full items-center justify-center p-4 text-center'>
               <Transition.Child
@@ -38,24 +51,24 @@ export default function Modal() {
                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                   <Dialog.Title
                     as='h3'
-                    className='text-2xl font-bold leading-6 text-gray'
+                    className='text-2xl font-bold leading-6 mb-5 text-gray'
                   >
-                    Spotify Preimum Required
+                    {heading}
+                    <XMarkIcon
+                      className='h-6 w-6 inline-block float-right cursor-pointer'
+                      onClick={closeModal}
+                    />
                   </Dialog.Title>
                   <div className='mt-3'>
-                    <p className='text-gray font-medium'>
-                      Upgrade or log in with another account to keep the good
-                      vibes rollin'!
-                    </p>
+                    <p className='text-gray font-medium'>{body}</p>
                   </div>
-
                   <div className='mt-5'>
                     <button
                       type='button'
-                      className='inline-flex justify-center rounded-md border border-transparent bg-jade px-4 py-2 font-medium text-white hover:bg-gray focus:outline-none focus-visible:ring-2 focus-visible:ring-jade focus-visible:ring-offset-2'
-                      onClick={closeModal}
+                      className={`inline-flex justify-center rounded-md border border-transparent bg-black px-4 py-2 font-medium text-white hover:bg-${btnHoverColor} focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2`}
+                      onClick={handleBtnClick}
                     >
-                      Okay, Got it!
+                      {btnText}
                     </button>
                   </div>
                 </Dialog.Panel>

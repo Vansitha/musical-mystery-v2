@@ -1,13 +1,71 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BlobEffect } from "../components/BlobEffects";
+import {
+  deleteUserAccount,
+  getAnonymousMode,
+  toggleAnonymousMode,
+} from "../firebase/leaderboard";
+import { useSpotifyContext } from "../context/SpotifyProvider";
+import toast, { Toaster } from "react-hot-toast";
 import ToggleSwitch from "../components/ToggleSwitch";
 import Footer from "../components/Footer";
-import { BlobEffect } from "../components/BlobEffects";
+import Modal from "../components/Modal";
 
 const REPO_LINK = "https://github.com/Vansitha/musical-mystery-v2";
 
+const DELETE_BODY_TXT =
+  "This action will permanently delete your game data and will be logged out of the app. Don't worry, this will not delete your spotify account! Are you sure you want to proceed?";
+const DELETE_HEADING_TXT = "Leaving Already? 😥";
+const DELETE_BTN_TXT = "Yes Proceed";
+
 export default function Settings() {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const { sdk } = useSpotifyContext();
+
+  const [hideName, setHideName] = useState(false);
+
+  useEffect(() => {
+    async function getUserSettings() {
+      const user = await sdk?.currentUser.profile();
+      const state = await getAnonymousMode(user?.email);
+      setHideName(state);
+    }
+
+    getUserSettings();
+  }, [sdk]);
+
+  async function deleteAccount() {
+    const user = await sdk?.currentUser.profile();
+    const success = await deleteUserAccount(user?.email);
+    console.log(success);
+    if (success) {
+      localStorage.clear();
+      navigate("/", { replace: true });
+    } else {
+      toast.error("Could not delete account");
+    }
+  }
+
+  async function hideNameToggle() {
+    const user = await sdk?.currentUser.profile();
+    const isSuccess = await toggleAnonymousMode(user?.email, !hideName);
+    return isSuccess;
+  }
+
   return (
     <div className='container h-screen mx-auto flex flex-col justify-evenly'>
+      <Toaster />
+      {showModal && (
+        <Modal
+          heading={DELETE_HEADING_TXT}
+          body={DELETE_BODY_TXT}
+          btnText={DELETE_BTN_TXT}
+          bntHandler={deleteAccount}
+          btnHoverColor='red'
+        />
+      )}
       <div>
         <div className='font-bold text-6xl'>Settings ⚙</div>
         <div className='mt-5'>
@@ -15,18 +73,16 @@ export default function Settings() {
         </div>
       </div>
       <div>
-        <div className='flex items-center'>
-          <p className='pe-5'>Collect data for leaderboard </p>
-          <ToggleSwitch />
+        <div className='flex items-center mb-2'>
+          <p className='pe-5'>Hide my name on leaderboard</p>
+          <ToggleSwitch state={hideName} toggleHandler={hideNameToggle} />
         </div>
-        <div className='flex items-center'>
-          <p className='pe-5'>Collect data for leaderboard </p>
-          <ToggleSwitch />
-        </div>
-        <div className='flex items-center'>
-          <p className='pe-5'>Collect data for leaderboard </p>
-          <ToggleSwitch />
-        </div>
+        <Link
+          onClick={() => setShowModal(!showModal)}
+          className='underline underline-offset-2 hover:text-red'
+        >
+          Delete my data
+        </Link>
       </div>
       <div className='leading-relaxed'>
         <p className='font-semibold'>Musical Mystery v2.0</p>

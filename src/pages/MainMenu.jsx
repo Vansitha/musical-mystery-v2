@@ -19,7 +19,6 @@ export default function MainMenu() {
   });
   const [play, setPlay] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -49,7 +48,14 @@ export default function MainMenu() {
 
   return (
     <div className='container h-screen flex flex-col justify-around mx-auto'>
-      {showModal && <Modal />}
+      {showModal && (
+        <Modal
+          heading='Spotify Preimum Required'
+          body='Upgrade or log in with another account to keep the good vibes rollin!'
+          btnText='Okay, Got it!'
+          btnHoverColor='jade'
+        />
+      )}
       <Header username={userDetails.name} image={userDetails.profileImage} />
       <MenuNav isPlay={play} />
       <Footer displayPosition={"start"} enableMenuCallBack={false} />

@@ -17,7 +17,7 @@ function App() {
         <Route element={<TempOverlayWrapper />}>
           <Route path='/' element={<Login />} />
           <Route element={<PrivateRoutes />}>
-            <Route path='/main-menu' element={<MainMenu />} />
+            <Route path='/main-menu' element={<MainMenu />}  />
             <Route path='/play' element={<GameScreen />} />
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/settings' element={<Settings />} />

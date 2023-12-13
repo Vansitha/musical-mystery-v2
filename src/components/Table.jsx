@@ -37,28 +37,34 @@ export default function Table({ data, className }) {
 
   return (
     <div className={`relative overflow-x-auto w-full ${className}`}>
-      <table className='w-full text-sm text-left'>
-        <thead className='text-xs text-gray-700 uppercase dark:text-white'>
-          <tr>
-            <th scope='col' className='px-6 py-3'>
-              Rank
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Player Name
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Country
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Total Games Played
-            </th>
-            <th scope='col' className='px-6 py-3'>
-              Highest Score
-            </th>
-          </tr>
-        </thead>
-        <tbody>{populateCards(data)}</tbody>
-      </table>
+      {data.length == 0 ? (
+        <div className='mt-5'>
+          No players on the leaderboard yet. Be the first to play! ✨
+        </div>
+      ) : (
+        <table className='w-full text-sm text-left'>
+          <thead className='text-xs text-gray-700 uppercase dark:text-white'>
+            <tr>
+              <th scope='col' className='px-6 py-3'>
+                Rank
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Player Name
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Country
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Total Games Played
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Highest Score
+              </th>
+            </tr>
+          </thead>
+          <tbody>{populateCards(data)}</tbody>
+        </table>
+      )}
     </div>
   );
 }
