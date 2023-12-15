@@ -1,3 +1,4 @@
+import Spinner from "./Spinner";
 import TableRow from "./TableRow";
 
 const rankColors = {
@@ -8,7 +9,7 @@ const rankColors = {
 
 const userRankColor = "bg-black";
 
-export default function Table({ data, className }) {
+export default function Table({ data, className, isLoading }) {
   function populateCards(users) {
     return users.map((user) => {
       let cardColor = "";
@@ -33,6 +34,14 @@ export default function Table({ data, className }) {
         />
       );
     });
+  }
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center h-96'>
+        <Spinner size='lg' />
+      </div>
+    );
   }
 
   return (

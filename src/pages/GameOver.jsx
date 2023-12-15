@@ -3,7 +3,7 @@ import { BlobEffect } from "../components/BlobEffects";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { getHigestScore } from "../firebase/leaderboard";
+import { getHigestScore, updateUserHighScore } from "../firebase/leaderboard";
 import { useSpotifyContext } from "../context/SpotifyProvider";
 import { motion } from "framer-motion";
 
@@ -21,13 +21,20 @@ export default function GameOver() {
         setHighScore(score);
       }
     }
-    // Get the score from previous screen
-    console.log(location);
-    if (location.state) {
-      setCurrentScore(location.state.score);
+
+    async function updateScore() {
+      const user = await sdk?.currentUser.profile();
+      // Get the score from previous screen
+      if (location.state) {
+        setCurrentScore(location.state.score);
+        if (user) {
+          updateUserHighScore(user.email, location.state.score);
+        }
+      }
     }
 
     getScore();
+    updateScore();
   }, [sdk]);
 
   const varient = {

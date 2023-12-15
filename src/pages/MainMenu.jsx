@@ -19,6 +19,7 @@ export default function MainMenu() {
   });
   const [play, setPlay] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {

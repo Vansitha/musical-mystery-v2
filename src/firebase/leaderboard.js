@@ -59,16 +59,13 @@ export async function getTopTenLeaderboard() {
 export async function updateUserHighScore(email, newScore) {
   if (!email || newScore == 0) return;
   const currHighestScore = await getHigestScore(email);
-  if (currHighestScore < newScore) return;
+  if (currHighestScore >= newScore) return;
 
   try {
-    await updateDoc(
-      (doc(db, USERS_COLLECTION, email),
-      {
-        highScore: newScore,
-        totalGamesPlayed: increment(1),
-      })
-    );
+    await updateDoc(doc(db, USERS_COLLECTION, email), {
+      highScore: newScore,
+      totalGamesPlayed: increment(1),
+    });
   } catch (error) {
     console.log(error);
   }
@@ -137,7 +134,6 @@ export async function toggleAnonymousMode(email, mode) {
     if (!user.exists()) return false;
 
     await updateDoc(doc(db, USERS_COLLECTION, email), {
-
       isAnonymous: mode,
     });
     return true;

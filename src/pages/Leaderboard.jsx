@@ -1,25 +1,26 @@
-import Table from "../components/Table";
-import Footer from "../components/Footer";
 import { BlobEffect } from "../components/BlobEffects";
 import { useEffect } from "react";
 import { getTopTenLeaderboard } from "../firebase/leaderboard";
 import { useState } from "react";
 import { useSpotifyContext } from "../context/SpotifyProvider";
+import Table from "../components/Table";
+import Footer from "../components/Footer";
 
 export default function Leaderboard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [playerRank, setPlayerRank] = useState("Unrated");
+  const [isLoading, setIsLoading] = useState(true);
   const { sdk } = useSpotifyContext();
 
   useEffect(() => {
     async function getLeaderboardData() {
       const players = await getTopTenLeaderboard();
-
       setLeaderboardData(players);
 
       const user = await sdk?.currentUser.profile();
       const player = players.find((player) => player.email == user?.email);
       player && setPlayerRank("# " + player.rank);
+      setIsLoading(false);
     }
     getLeaderboardData();
   }, [sdk]);
@@ -38,7 +39,7 @@ export default function Leaderboard() {
           <span className='text-4xl ms-5 font-bold'>{playerRank}</span>
         </p>
       </div>
-      <Table data={leaderboardData} />
+      <Table data={leaderboardData} isLoading={isLoading} />
       <Footer
         className='absolute bottom-0 mt-20 mb-5 pb-3'
         enableMenuCallBack={true}

@@ -9,7 +9,7 @@ export default function TempOverlayWrapper() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1300);
+      setIsSmallScreen(window.innerWidth < 1290);
     };
     handleResize();
 
@@ -30,7 +30,7 @@ function Overlay() {
       <h1 className='mb-14 font-bold text-4xl leading-normal'>
         Available Soon!
       </h1>
-      <p className='mx-5 md:w-76 font-medium text-sm'>
+      <p className='mx-5 sm:w-[490px] md:w-[490px] font-medium text-sm'>
         We&apos;re currently optimizing the game for mobile and tablet devices,
         it&apos;ll be available on your device soon!
       </p>

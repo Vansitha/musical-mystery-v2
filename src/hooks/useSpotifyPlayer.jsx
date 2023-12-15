@@ -24,8 +24,6 @@ export default function useSpotifyPlayer() {
             ? name.slice(0, name.indexOf("("))
             : name;
 
-          console.log(adjustedName);
-
           return { id, name: adjustedName };
         });
 
@@ -57,10 +55,14 @@ export default function useSpotifyPlayer() {
       () => tracks.current[getRandomIndex()]
     );
 
-    console.log(randomTracks);
-
     return randomTracks;
   }
 
-  return { isLoading, pause, play, getRandomTracks };
+  async function getProgress() {
+    const { progress_ms } = await sdk.player.getPlaybackState();
+    const seconds = progress_ms / 1000;
+    return seconds;
+  }
+
+  return { isLoading, pause, play, getRandomTracks, getProgress };
 }

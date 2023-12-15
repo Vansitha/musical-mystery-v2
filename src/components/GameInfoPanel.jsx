@@ -1,4 +1,3 @@
-import React from "react";
 import { HeartIcon } from "@heroicons/react/24/solid";
 
 export default function GameInfoPanel({ score, lives }) {

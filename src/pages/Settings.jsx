@@ -39,7 +39,6 @@ export default function Settings() {
   async function deleteAccount() {
     const user = await sdk?.currentUser.profile();
     const success = await deleteUserAccount(user?.email);
-    console.log(success);
     if (success) {
       localStorage.clear();
       navigate("/", { replace: true });
@@ -62,7 +61,7 @@ export default function Settings() {
           heading={DELETE_HEADING_TXT}
           body={DELETE_BODY_TXT}
           btnText={DELETE_BTN_TXT}
-          bntHandler={deleteAccount}
+          btnHandler={deleteAccount}
           btnHoverColor='red'
         />
       )}
