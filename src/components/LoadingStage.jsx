@@ -7,9 +7,9 @@ export default function LoadingStage() {
     <>
       <div className='h-screen container mx-auto px-24 flex flex-col justify-center items-center'>
         <div className='mb-10 opacity-70'>
-          💡 Suggestion: Wear heaphones in public places.
+          💡 Suggestion: Consider wearing heaphones in public a setting.
         </div>
-        <div className='mb-10 text-3xl font-bold'>Setting the Stage</div>
+        <div className='mb-10 text-3xl font-bold'>Preparing Music Player</div>
         <Spinner size='lg' />
         <Footer
           displayPosition='center'

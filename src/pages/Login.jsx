@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { appRoutes, AUTH_TOKEN_KEY } from "../constants";
+import { BlobEffect } from "../components/BlobEffects";
+import toast, { Toaster } from "react-hot-toast";
 import Button from "../components/Button";
 import useSpotifyAuth from "../hooks/useSpotifyAuth";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
-import { BlobEffect } from "../components/BlobEffects";
 
-const AUTH_TOKEN_KEY = "spotify-sdk:AuthorizationCodeWithPKCEStrategy:token";
+// Toast messages
 const CONNECTED_NOTIFY = "Connected Successfully";
 const WELCOME_NOTIFY = "Welcome back!";
 const ERROR_NOTIFY = "Could not connect with Spotify";
-const MAIN_MENU = "/main-menu";
 
+// URl params for spotify auth
 const CODE_PARAM = "code";
 const ERROR_PARAM = "error";
 
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [searchParams] = useSearchParams();
   const triggerAuth = useSpotifyAuth();
   const navigate = useNavigate();
-  let [searchParams] = useSearchParams();
 
-  const loginHandler = async () => {
-    await triggerAuth();
-  };
+  const loginHandler = async () => await triggerAuth();
 
   const goToMainMenuHandler = async () => {
-    // Called for the second time after login redirect back to app to get SDK instance
-    await triggerAuth();
-    navigate(MAIN_MENU, { replace: true });
+    await triggerAuth(); // Called to initialize the SDK instance after redirect
+    navigate(appRoutes.mainMenu, { replace: true });
   };
 
   useEffect(() => {
@@ -42,12 +40,12 @@ export default function Login() {
       toast(WELCOME_NOTIFY, { icon: "👋" });
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className='container mx-auto h-screen flex flex-col items-center justify-center'>
       <h1 className='text-4xl md:text-9xl mb-11 font-extrabold italic'>
-        Musical <span style={customStrokeStyle.outlineText}>Mystery</span>
+        Musical <span style={textStrokeStyle.outlineText}>Mystery</span>
       </h1>
       <h2 className='text-center text-sm md:mt-10 md:text-2xl'>
         {isLoggedIn ? (
@@ -81,7 +79,7 @@ export default function Login() {
   );
 }
 
-const customStrokeStyle = {
+const textStrokeStyle = {
   outlineText: {
     WebkitTextStroke: "3px #1ED79F",
     WebkitTextFillColor: "transparent",
