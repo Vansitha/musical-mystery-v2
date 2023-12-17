@@ -9,6 +9,7 @@ import GameInfoPanel from "../components/GameInfoPanel";
 import PlayBack from "../components/PlayBack";
 import useSpotifyPlayer from "../hooks/useSpotifyPlayer";
 import LoadingStage from "../components/LoadingStage";
+import { motion } from "framer-motion";
 
 const SCORE_INCREMENT_VALUE = 100;
 const LIVES_DECREMENT_VALUE = 1;
@@ -133,7 +134,12 @@ export default function GameScreen() {
   }
 
   return (
-    <div className='h-screen container mx-auto px-24 flex flex-col justify-around'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='h-screen container mx-auto px-24 flex flex-col justify-around'
+    >
       <Toaster position='top-center' reverseOrder={true} />
       <GameInfoPanel score={score} lives={lives} />
       <PlayBack totalTime={TIMER_START_VALUE} countdown={countDown} />
@@ -167,6 +173,6 @@ export default function GameScreen() {
       />
       <BlobEffect style='style-2' position='top-0 -right-96 opacity-50' />
       <BlobEffect style='style-1' position='top-0 -left-96 opactiy-50' />
-    </div>
+    </motion.div>
   );
 }

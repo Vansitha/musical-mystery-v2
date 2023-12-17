@@ -1,9 +1,15 @@
 import Footer from "../components/Footer";
 import { BlobEffect } from "../components/BlobEffects";
+import { motion } from "framer-motion";
 
 export default function Instructions() {
   return (
-    <div className='container h-screen mx-auto pt-5 flex flex-col justify-around'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container h-screen mx-auto pt-5 flex flex-col justify-around'
+    >
       <div className='font-bold text-6xl'>How to Play 🎯</div>
       <ol className='leading-relaxed'>
         <li>
@@ -43,7 +49,7 @@ export default function Instructions() {
       <Footer enableMenuCallBack={true} />
       <BlobEffect position='-top-96 -left-72' style='style-1' />
       <BlobEffect position='bottom-48 -right-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }
 

@@ -50,7 +50,12 @@ export default function GameOver() {
   };
 
   return (
-    <div className='container h-screen flex flex-col justify-around mx-auto'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container h-screen flex flex-col justify-around mx-auto'
+    >
       <div className='flex flex-col items-center'>
         <div className='font-extrabold text-8xl '>Game Over</div>
         <div className='my-16 text-center'>
@@ -99,6 +104,6 @@ export default function GameOver() {
       <Footer displayPosition='center' enableMenuCallBack={true} />
       <BlobEffect position='bottom-60 -right-96' style='style-2' />
       <BlobEffect position='bottom-60 -left-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }

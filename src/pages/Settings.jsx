@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BlobEffect } from "../components/BlobEffects";
-import {
-  deleteUserAccount,
-  getAnonymousMode,
-  toggleAnonymousMode,
-} from "../firebase/leaderboard";
 import { useSpotifyContext } from "../context/SpotifyProvider";
 import toast, { Toaster } from "react-hot-toast";
 import ToggleSwitch from "../components/ToggleSwitch";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
+import {
+  deleteUserAccount,
+  getAnonymousMode,
+  toggleAnonymousMode,
+} from "../firebase/leaderboard";
+import { motion } from "framer-motion";
 
 const REPO_LINK = "https://github.com/Vansitha/musical-mystery-v2";
-
-const DELETE_BODY_TXT =
-  "This action will permanently delete your game data and will be logged out of the app. Don't worry, this will not delete your spotify account! Are you sure you want to proceed?";
 const DELETE_HEADING_TXT = "Leaving Already? 😥";
 const DELETE_BTN_TXT = "Yes Proceed";
+const DELETE_BODY_TXT =
+  "This action will permanently delete your game data and will be logged out of the app. Don't worry, this will not delete your spotify account!  Are you sure you want to proceed?";
 
 export default function Settings() {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-  const { sdk } = useSpotifyContext();
-
   const [hideName, setHideName] = useState(false);
+  const { sdk } = useSpotifyContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getUserSettings() {
@@ -39,6 +38,7 @@ export default function Settings() {
   async function deleteAccount() {
     const user = await sdk?.currentUser.profile();
     const success = await deleteUserAccount(user?.email);
+
     if (success) {
       localStorage.clear();
       navigate("/", { replace: true });
@@ -54,7 +54,12 @@ export default function Settings() {
   }
 
   return (
-    <div className='container h-screen mx-auto flex flex-col justify-evenly'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container h-screen mx-auto flex flex-col justify-evenly'
+    >
       <Toaster />
       {showModal && (
         <Modal
@@ -101,6 +106,6 @@ export default function Settings() {
       <Footer displayPosition='start' enableMenuCallBack={true} />
       <BlobEffect position='-bottom-80 -left-96' style='style-1' />
       <BlobEffect position='bottom-48 -right-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }

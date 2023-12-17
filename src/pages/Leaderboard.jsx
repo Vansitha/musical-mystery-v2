@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSpotifyContext } from "../context/SpotifyProvider";
 import Table from "../components/Table";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
 
 export default function Leaderboard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -26,7 +27,12 @@ export default function Leaderboard() {
   }, [sdk]);
 
   return (
-    <div className='container mx-auto flex flex-col justify-around mt-5'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container mx-auto flex flex-col justify-around mt-5'
+    >
       <div className='flex justify-between'>
         <div>
           <div className='font-extrabold text-6xl pt-5'>Leaderboard 🏆</div>
@@ -46,6 +52,6 @@ export default function Leaderboard() {
       />
       <BlobEffect position='-top-64 -left-64' style='style-1' />
       <BlobEffect position='top-52 -right-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }

@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import { BlobEffect } from "../components/BlobEffects";
 import { createUser } from "../firebase/leaderboard";
 import Modal from "../components/Modal";
+import { motion } from "framer-motion";
 
 /**
  * Main menu component displaying user details, navigation menu, and footer.
@@ -48,7 +49,12 @@ export default function MainMenu() {
   }, [sdk]);
 
   return (
-    <div className='container h-screen flex flex-col justify-around mx-auto'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container h-screen flex flex-col justify-around mx-auto'
+    >
       {showModal && (
         <Modal
           heading='Spotify Preimum Required'
@@ -62,6 +68,6 @@ export default function MainMenu() {
       <Footer displayPosition={"start"} enableMenuCallBack={false} />
       <BlobEffect position='-top-64 -left-64' style='style-1' />
       <BlobEffect position='top-52 -right-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }

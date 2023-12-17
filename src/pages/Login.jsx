@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { appRoutes, AUTH_TOKEN_KEY } from "../constants";
 import { BlobEffect } from "../components/BlobEffects";
+import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "../components/Button";
 import useSpotifyAuth from "../hooks/useSpotifyAuth";
@@ -43,7 +44,12 @@ export default function Login() {
   }, [searchParams]);
 
   return (
-    <div className='container mx-auto h-screen flex flex-col items-center justify-center'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='container mx-auto h-screen flex flex-col items-center justify-center'
+    >
       <h1 className='text-4xl md:text-9xl mb-11 font-extrabold italic'>
         Musical <span style={textStrokeStyle.outlineText}>Mystery</span>
       </h1>
@@ -75,7 +81,7 @@ export default function Login() {
       <Toaster position='top-center' reverseOrder={false} />
       <BlobEffect position='top-96 -left-80' style='style-2' />
       <BlobEffect position='top-0 -right-96' style='style-2' />
-    </div>
+    </motion.div>
   );
 }
 
