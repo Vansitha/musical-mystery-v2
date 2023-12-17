@@ -22,7 +22,8 @@ export default function useSpotifyPlayerSetup() {
       const authObject = localStorage.getItem(AUTH_TOKEN_KEY);
       const accessToken = JSON.parse(authObject).access_token;
       const player = new window.Spotify.Player({
-        name: "Musical Mystery Player",
+        // name: "Musical Mystery Player",
+        name: "Musical Mystery Game",
         getOAuthToken: (cb) => {
           cb(accessToken);
         },
@@ -34,7 +35,7 @@ export default function useSpotifyPlayerSetup() {
         setDeviceId(device_id);
       });
 
-      player.addListener("player_state_changed");
+      player.addListener("player_state_changed", (state) => console.log(state));
 
       player.addListener("not_ready", ({ device_id }) => {
         console.log("Device ID has gone offline", device_id);
@@ -47,7 +48,9 @@ export default function useSpotifyPlayerSetup() {
     };
 
     return () => {
-      console.log(spotifyPlayer);
+      if (!spotifyPlayer) return;
+      spotifyPlayer.disconnect();
+      console.log("clean up", spotifyPlayer);
       document.body.removeChild(script);
     };
   }, []);

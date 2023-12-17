@@ -56,7 +56,7 @@ export async function getTopTenLeaderboard() {
   return [];
 }
 
-export async function updateUserHighScore(email, newScore) {
+export async function updateUserHighScore(email, newScore, gameId) {
   if (!email || newScore == 0) return;
   const currHighestScore = await getHigestScore(email);
   if (currHighestScore >= newScore) return;
@@ -65,6 +65,7 @@ export async function updateUserHighScore(email, newScore) {
     await updateDoc(doc(db, USERS_COLLECTION, email), {
       highScore: newScore,
       totalGamesPlayed: increment(1),
+      prevGameId: gameId,
     });
   } catch (error) {
     console.log(error);
@@ -92,6 +93,18 @@ export async function getHigestScore(email) {
   } catch (err) {
     console.log(err);
   }
+}
+
+export async function getPrevGameId(email) {
+  if (!email) return 0;
+  try {
+    const user = await getDoc(doc(db, USERS_COLLECTION, email));
+    if (!user.exists()) return 0;
+    return user.data().prevGameId;
+  } catch (err) {
+    console.log(err);
+  }
+  return 0;
 }
 
 export async function createUser(email, name, country) {

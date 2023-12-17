@@ -64,5 +64,9 @@ export default function useSpotifyPlayer() {
     return seconds;
   }
 
-  return { isLoading, pause, play, getRandomTracks, getProgress };
+  async function reset() {
+    await sdk.player.seekToPosition(0, deviceId);
+  }
+
+  return { isLoading, pause, play, getRandomTracks, getProgress, reset };
 }

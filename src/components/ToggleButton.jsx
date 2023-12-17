@@ -1,6 +1,7 @@
-export default function ToggleButton({ text, state, callback }) {
+export default function ToggleButton({ text, state, callback, isDisabled }) {
   return (
     <button
+      disabled={isDisabled}
       className={`p-3 px-24 rounded-xl ${
         state
           ? "bg-light-green text-white"
