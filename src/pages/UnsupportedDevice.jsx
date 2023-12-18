@@ -4,15 +4,15 @@ import { Outlet } from "react-router-dom";
 import { BlobEffect } from "../components/BlobEffects";
 import Footer from "../components/Footer";
 
-export default function TempOverlayWrapper() {
+export default function UnsupportedDevice() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1290);
     };
-    handleResize();
 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -20,7 +20,7 @@ export default function TempOverlayWrapper() {
     };
   }, []);
 
-  return <>{isSmallScreen ? <Overlay /> : <Outlet />}</>;
+  return isSmallScreen ? <Overlay /> : <Outlet />;
 }
 
 function Overlay() {

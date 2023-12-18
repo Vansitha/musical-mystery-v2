@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 import { useSpotifyContext } from "../context/SpotifyProvider";
+import { BlobEffect } from "../components/BlobEffects";
+import { createUser } from "../firebase/leaderboard";
+import { motion } from "framer-motion";
+import toast, { Toaster } from "react-hot-toast";
 import FallbackAvatarImg from "../assets/fallback-avatar.png";
 import MenuNav from "../components/MenuNav";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { BlobEffect } from "../components/BlobEffects";
-import { createUser } from "../firebase/leaderboard";
 import Modal from "../components/Modal";
-import { motion } from "framer-motion";
 
-/**
- * Main menu component displaying user details, navigation menu, and footer.
- */
 export default function MainMenu() {
   const { sdk } = useSpotifyContext();
   const [userDetails, setUserDetails] = useState({
     name: "",
     profileImage: FallbackAvatarImg,
   });
-  const [play, setPlay] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [readyToPlay, setReadyToPlay] = useState(false);
+  const [showPreimumRequiredModal, showPremiumRequiredModal] = useState(false);
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    if (!sdk) return;
+
+    const getUserDetials = async () => {
       try {
         const user = await sdk?.currentUser.profile();
+
         if (user) {
           setUserDetails({
             name: user?.display_name,
@@ -32,20 +33,20 @@ export default function MainMenu() {
           });
           await createUser(user.email, user.display_name, user.country);
 
-          // Set 'play' to true if the user has a premium account
+          /* IMPORTANT: Only premium users can play, since spotify requires 
+             it for audio playback when building an app */
           if (user.product === "premium") {
-            setPlay(true);
-          } else {
-            setShowModal(true);
+            setReadyToPlay(true);
+            return;
           }
+          showPremiumRequiredModal(true);
         }
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        toast.error("Unable to verify preimum status.");
       }
     };
 
-    // Fetch user details when the SDK is available
-    sdk && fetchUserDetails();
+    getUserDetials();
   }, [sdk]);
 
   return (
@@ -55,7 +56,7 @@ export default function MainMenu() {
       exit={{ opacity: 0 }}
       className='container h-screen flex flex-col justify-around mx-auto'
     >
-      {showModal && (
+      {showPreimumRequiredModal && (
         <Modal
           heading='Spotify Preimum Required'
           body='Upgrade or log in with another account to keep the good vibes rollin!'
@@ -64,10 +65,11 @@ export default function MainMenu() {
         />
       )}
       <Header username={userDetails.name} image={userDetails.profileImage} />
-      <MenuNav isPlay={play} />
+      <MenuNav isPlay={readyToPlay} />
       <Footer displayPosition={"start"} enableMenuCallBack={false} />
       <BlobEffect position='-top-64 -left-64' style='style-1' />
       <BlobEffect position='top-52 -right-96' style='style-2' />
+      <Toaster />
     </motion.div>
   );
 }

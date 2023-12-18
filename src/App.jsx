@@ -8,13 +8,13 @@ import MainMenu from "./pages/MainMenu";
 import GameScreen from "./pages/GameScreen";
 import PrivateRoutes from "./PrivateRoutes";
 import ErrorPage from "./pages/ErrorPage";
-import TempOverlayWrapper from "./pages/TempOverlayWrapper";
+import UnsupportedDevice from "./pages/UnsupportedDevice";
 
 function App() {
   return (
     <div className='font-body text-white font-medium'>
       <Routes>
-        <Route element={<TempOverlayWrapper />}>
+        <Route element={<UnsupportedDevice />}>
           <Route path='/' element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/main-menu' element={<MainMenu />} />
