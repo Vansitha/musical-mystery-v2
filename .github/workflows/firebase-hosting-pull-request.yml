@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          touch.env
+          touch .env
           echo VITE_SPOTIFY_CLIENT_ID=${{ secrets.VITE_SPOTIFY_CLIENT_ID }} >> .env
           echo VITE_REDIRECT_TARGET=${{ secrets.VITE_REDIRECT_TARGET }} >> .env
           npm ci && npm run build
