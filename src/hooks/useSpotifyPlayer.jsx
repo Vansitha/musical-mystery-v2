@@ -44,14 +44,14 @@ export default function useSpotifyPlayer() {
     await sdk.player.startResumePlayback(deviceId, undefined, [uri]);
   }
 
-  function getRandomTracks() {
+  function getRandomTracks(count) {
     if (isLoading) return;
 
     const getRandomIndex = () =>
       Math.floor(Math.random() * tracks.current.length);
 
     const randomTracks = Array.from(
-      { length: 3 },
+      { length: count },
       () => tracks.current[getRandomIndex()]
     );
 
@@ -64,9 +64,16 @@ export default function useSpotifyPlayer() {
     return seconds;
   }
 
-  async function reset() {
+  async function resetPlayerProgress() {
     await sdk.player.seekToPosition(0, deviceId);
   }
 
-  return { isLoading, pause, play, getRandomTracks, getProgress, reset };
+  return {
+    isLoading,
+    pause,
+    play,
+    getRandomTracks,
+    getProgress,
+    resetPlayerProgress,
+  };
 }

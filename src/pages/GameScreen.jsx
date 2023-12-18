@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BlobEffect } from "../components/BlobEffects";
+import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "../components/Button";
 import AnswerButton from "../components/game-screen/AnswerButton";
@@ -9,7 +10,6 @@ import GameInfoPanel from "../components/game-screen/GameInfoPanel";
 import PlayBack from "../components/game-screen/PlayBack";
 import useSpotifyPlayer from "../hooks/useSpotifyPlayer";
 import LoadingStage from "../components/game-screen/LoadingStage";
-import { motion } from "framer-motion";
 
 const SCORE_INCREMENT_VALUE = 100;
 const LIVES_DECREMENT_VALUE = 1;
@@ -20,8 +20,6 @@ function generateGameId() {
 }
 
 export default function GameScreen() {
-  const { play, pause, getRandomTracks, getProgress, reset, isLoading } =
-    useSpotifyPlayer();
   const navigate = useNavigate();
   const countdownIntervalId = useRef();
   const gameOverTimeoutId = useRef();
@@ -30,19 +28,27 @@ export default function GameScreen() {
   const [disableButtons, setDisableButtons] = useState(false);
   const [lives, setLives] = useState(3);
   const [score, setScore] = useState(0);
-  const [tracks, setTracks] = useState({
+  const [currRoundTracks, setTracks] = useState({
     correctTrack: {
       id: "",
       name: "",
     },
-    allTracks: [],
+    selectedTracks: [],
   });
+  const {
+    play,
+    pause,
+    getRandomTracks,
+    getProgress,
+    resetPlayerProgress,
+    isLoading,
+  } = useSpotifyPlayer();
 
   // Updates countdown timer value
   useEffect(() => {
-    if (isPlayGame === false && !tracks.correctTrack.id) return;
+    if (isPlayGame === false && !currRoundTracks.correctTrack.id) return;
 
-    reset();
+    resetPlayerProgress();
 
     countdownIntervalId.current = setInterval(() => {
       (async () => {
@@ -53,7 +59,7 @@ export default function GameScreen() {
 
     // Clear the interval when the game is paused
     return () => clearInterval(countdownIntervalId.current);
-  }, [isPlayGame, tracks]);
+  }, [isPlayGame, currRoundTracks]);
 
   // Checks if game over and plays new song when countdown timer reaches 0
   useEffect(() => {
@@ -71,11 +77,12 @@ export default function GameScreen() {
 
   // Step 1
   function pickAndPlayTrack() {
-    const randomTracks = getRandomTracks();
-    const correctTrack = randomTracks[Math.floor(Math.random() * 3)];
+    const trackCount = 3;
+    const randomTracks = getRandomTracks(trackCount);
+    const correctTrack = randomTracks[Math.floor(Math.random() * trackCount)];
     setTracks({
       correctTrack,
-      allTracks: randomTracks,
+      selectedTracks: randomTracks,
     });
     play(correctTrack.id);
   }
@@ -90,7 +97,7 @@ export default function GameScreen() {
   function answerBtnClickHandler(btnText) {
     clearInterval(countdownIntervalId.current);
     setCountDown(TIMER_START_VALUE);
-    if (tracks.correctTrack.name === btnText) {
+    if (currRoundTracks.correctTrack.name === btnText) {
       setScore((prev) => prev + SCORE_INCREMENT_VALUE);
     } else {
       const newLives = lives - LIVES_DECREMENT_VALUE;
@@ -103,23 +110,22 @@ export default function GameScreen() {
 
   // Check if game over
   function isGameOver(newLives) {
-    if (newLives == 0) {
-      toast("Game over! You have no lives left.", { icon: "💔" });
-      setDisableButtons(true);
-      pause();
-      clearInterval(countdownIntervalId.current);
-      setLives(newLives);
+    if (newLives != 0) return false;
 
-      gameOverTimeoutId.current = setTimeout(() => {
-        navigate("/game-over", {
-          replace: true,
-          state: { score, currGameId: generateGameId() },
-        });
-      }, 2000);
+    toast("Game over! You have no lives left.", { icon: "💔" });
+    setDisableButtons(true);
+    pause();
+    clearInterval(countdownIntervalId.current);
+    setLives(newLives);
 
-      return true;
-    }
-    return false;
+    gameOverTimeoutId.current = setTimeout(() => {
+      navigate("/game-over", {
+        replace: true,
+        state: { score, currGameId: generateGameId() },
+      });
+    }, 2000);
+
+    return true;
   }
 
   // Cleaning up the intervals, timeouts and pausing music before leaving the page
@@ -152,7 +158,7 @@ export default function GameScreen() {
           />
         ) : (
           <>
-            {tracks.allTracks.map((track) => {
+            {currRoundTracks.selectedTracks.map((track) => {
               return (
                 <AnswerButton
                   key={Math.random() + track.id}

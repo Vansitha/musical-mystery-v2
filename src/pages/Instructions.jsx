@@ -1,6 +1,6 @@
-import Footer from "../components/Footer";
 import { BlobEffect } from "../components/BlobEffects";
 import { motion } from "framer-motion";
+import Footer from "../components/Footer";
 
 export default function Instructions() {
   return (
