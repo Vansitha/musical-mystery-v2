@@ -15,12 +15,12 @@ import { db } from "./config";
 
 const USERS_COLLECTION = "User";
 
-export async function getTopTenLeaderboard() {
+export async function getTopPlayers(playerLimit) {
   const usersCollection = collection(db, USERS_COLLECTION);
   const topPlayersQuery = query(
     usersCollection,
     orderBy("highScore", "desc"),
-    limit(10)
+    limit(playerLimit)
   );
 
   try {

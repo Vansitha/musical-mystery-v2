@@ -1,6 +1,6 @@
 import { BlobEffect } from "../components/BlobEffects";
 import { useEffect } from "react";
-import { getTopTenLeaderboard } from "../firebase/leaderboard";
+import { getTopPlayers } from "../firebase/leaderboard";
 import { useState } from "react";
 import { useSpotifyContext } from "../context/SpotifyProvider";
 import { motion } from "framer-motion";
@@ -18,7 +18,7 @@ export default function Leaderboard() {
   useEffect(() => {
     async function getLeaderboardData() {
       try {
-        const players = await getTopTenLeaderboard();
+        const players = await getTopPlayers(10);
         setTopPlayersRankDetails(players);
 
         const user = await sdk?.currentUser.profile();
