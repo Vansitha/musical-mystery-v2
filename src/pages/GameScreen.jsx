@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { BlobEffect } from "../components/BlobEffects";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "../components/Button";
-import ToggleButton from "../components/ToggleButton";
+import AnswerButton from "../components/game-screen/AnswerButton";
 import Footer from "../components/Footer";
-import GameInfoPanel from "../components/GameInfoPanel";
-import PlayBack from "../components/PlayBack";
+import GameInfoPanel from "../components/game-screen/GameInfoPanel";
+import PlayBack from "../components/game-screen/PlayBack";
 import useSpotifyPlayer from "../hooks/useSpotifyPlayer";
-import LoadingStage from "../components/LoadingStage";
+import LoadingStage from "../components/game-screen/LoadingStage";
 import { motion } from "framer-motion";
 
 const SCORE_INCREMENT_VALUE = 100;
@@ -154,7 +154,7 @@ export default function GameScreen() {
           <>
             {tracks.allTracks.map((track) => {
               return (
-                <ToggleButton
+                <AnswerButton
                   key={Math.random() + track.id}
                   text={isLoading ? "Loading..." : track.name}
                   isLoading={isLoading}

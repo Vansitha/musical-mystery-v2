@@ -1,6 +1,6 @@
-import { BlobEffect } from "./BlobEffects";
-import Spinner from "./Spinner";
-import Footer from "./Footer";
+import { BlobEffect } from "../BlobEffects";
+import Spinner from "../Spinner";
+import Footer from "../Footer";
 
 export default function LoadingStage() {
   return (

@@ -47,13 +47,10 @@ export async function getTopTenLeaderboard() {
     });
 
     const filteredPlayers = topPlayers.filter((player) => player != undefined);
-    console.log(filteredPlayers);
     return filteredPlayers;
   } catch (error) {
-    console.log(error);
+    throw new Error("An error getting top players.");
   }
-
-  return [];
 }
 
 export async function updateUserHighScore(email, newScore, gameId) {

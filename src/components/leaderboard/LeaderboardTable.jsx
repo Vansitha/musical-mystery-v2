@@ -1,4 +1,4 @@
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 import TableRow from "./TableRow";
 
 const rankColors = {
@@ -9,7 +9,12 @@ const rankColors = {
 
 const userRankColor = "bg-black";
 
-export default function Table({ data, className, isLoading }) {
+export default function LeaderboardTable({
+  data,
+  className,
+  isLoading,
+  isError,
+}) {
   function populateCards(users) {
     return users.map((user) => {
       let cardColor = "";
@@ -40,6 +45,15 @@ export default function Table({ data, className, isLoading }) {
     return (
       <div className='flex justify-center items-center h-96'>
         <Spinner size='lg' />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className='mt-5'>
+        Leaderboard services are unavialbe at the moment, please try again
+        later. 😢
       </div>
     );
   }

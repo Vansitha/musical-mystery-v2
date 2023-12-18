@@ -5,9 +5,9 @@ import { createUser } from "../firebase/leaderboard";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import FallbackAvatarImg from "../assets/fallback-avatar.png";
-import MenuNav from "../components/MenuNav";
+import MenuNav from "../components/main-menu/MenuNav";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Header from "../components/main-menu/Header";
 import Modal from "../components/Modal";
 
 export default function MainMenu() {

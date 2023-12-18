@@ -1,7 +1,7 @@
 import { ForwardIcon, PlayIcon } from "@heroicons/react/24/solid";
 import MenuNavOption from "./MenuNavOption";
 import { useNavigate } from "react-router-dom";
-import { useSpotifyContext } from "../context/SpotifyProvider";
+import { useSpotifyContext } from "../../context/SpotifyProvider";
 import { motion } from "framer-motion";
 import { useState } from "react";
 

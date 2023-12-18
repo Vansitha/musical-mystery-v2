@@ -1,4 +1,4 @@
-export default function ToggleButton({ text, state, callback, isDisabled }) {
+export default function AnswerButton({ text, state, callback, isDisabled }) {
   return (
     <button
       disabled={isDisabled}
