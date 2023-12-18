@@ -33,9 +33,8 @@ export default function MainMenu() {
           });
           await createUser(user.email, user.display_name, user.country);
 
-          /* IMPORTANT: Only premium users can play, since spotify requires 
-             it for audio playback when building an app */
-          if (user.product === "premium") {
+          /* Free user accounts include "free" or "open" tag as per spotify documentation */
+          if (user.product !== "free" || user.product !== "open") {
             setReadyToPlay(true);
             return;
           }
