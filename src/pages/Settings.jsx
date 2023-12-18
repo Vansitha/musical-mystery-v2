@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BlobEffect } from "../components/BlobEffects";
 import { useSpotifyContext } from "../context/SpotifyProvider";
+import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import ToggleSwitch from "../components/ToggleSwitch";
 import Footer from "../components/Footer";
@@ -11,7 +12,6 @@ import {
   getAnonymousMode,
   toggleAnonymousMode,
 } from "../firebase/leaderboard";
-import { motion } from "framer-motion";
 
 const REPO_LINK = "https://github.com/Vansitha/musical-mystery-v2";
 const DELETE_HEADING_TXT = "Leaving Already? 😥";
@@ -20,7 +20,7 @@ const DELETE_BODY_TXT =
   "This action will permanently delete your game data and will be logged out of the app. Don't worry, this will not delete your spotify account!  Are you sure you want to proceed?";
 
 export default function Settings() {
-  const [showModal, setShowModal] = useState(false);
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [hideName, setHideName] = useState(false);
   const { sdk } = useSpotifyContext();
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ export default function Settings() {
   useEffect(() => {
     async function getUserSettings() {
       const user = await sdk?.currentUser.profile();
-      const state = await getAnonymousMode(user?.email);
-      setHideName(state);
+      const curState = await getAnonymousMode(user?.email);
+      setHideName(curState);
     }
 
     getUserSettings();
@@ -61,7 +61,7 @@ export default function Settings() {
       className='container h-screen mx-auto flex flex-col justify-evenly'
     >
       <Toaster />
-      {showModal && (
+      {showConfirmDeleteModal && (
         <Modal
           heading={DELETE_HEADING_TXT}
           body={DELETE_BODY_TXT}
@@ -82,7 +82,7 @@ export default function Settings() {
           <ToggleSwitch state={hideName} toggleHandler={hideNameToggle} />
         </div>
         <Link
-          onClick={() => setShowModal(!showModal)}
+          onClick={() => setShowConfirmDeleteModal(!showConfirmDeleteModal)}
           className='underline underline-offset-2 hover:text-red'
         >
           Delete my data
@@ -92,14 +92,13 @@ export default function Settings() {
         <p className='font-semibold'>Musical Mystery v2.0</p>
         <p>Designed and built by as fun little side project.</p>
         <p>
-          Want to contribute?{" "}
+          Want to contribute?&nbsp;
           <Link
             className='underline font-semibold'
             to={REPO_LINK}
             target='_blank'
           >
-            {" "}
-            Head to the repo on Github{" "}
+            &nbsp; Head to the repo on Github&nbsp;
           </Link>
         </p>
       </div>
