@@ -49,7 +49,8 @@ To generate a new client ID, visit the Spotify Developer Dashboard. The followin
 At the end ensure that you copy and paste the target URL shown above (👉 http://localhost:5173/) into the Redirect URIs list under settings in the Spotify dashboard. Don't forget to copy-paste the client ID into your `.env` file. <br>
 
 Run the following command to install dependencies: `npm install`
-Open the development server by running: `npm run dev` <br>
+
+Open the development server by running: `npm run dev`
 
 At this point if you start the application you should be able to land on the login screen 🎉.
 
