@@ -25,19 +25,17 @@ export async function getTopPlayers(playerLimit) {
 
   try {
     const snapshot = await getDocs(topPlayersQuery);
-    const topPlayers = snapshot.docs.map((doc, index) => {
+    const topPlayers = snapshot.docs.map((doc) => {
       const { totalGamesPlayed, isAnonymous, highScore, country } = doc.data();
-      const rank = ++index;
 
-      if (totalGamesPlayed == 0) return;
+      if (totalGamesPlayed === 0) return null;
 
       let name = doc.data().name;
       if (isAnonymous) {
-        name = `Anonymous#${rank}`;
+        name = `Anonymous`;
       }
 
       return {
-        rank,
         name,
         highScore,
         country,
@@ -46,10 +44,18 @@ export async function getTopPlayers(playerLimit) {
       };
     });
 
-    const filteredPlayers = topPlayers.filter((player) => player != undefined);
-    return filteredPlayers;
+    // Sort players based on high score (descending order)
+    const sortedPlayers = topPlayers.sort((a, b) => b.highScore - a.highScore);
+
+    // Assign ranks to the sorted players
+    const rankedPlayers = sortedPlayers.map((player, index) => ({
+      rank: index + 1,
+      ...player,
+    }));
+
+    return rankedPlayers;
   } catch (error) {
-    throw new Error("An error getting top players.");
+    throw new Error("An error occurred while getting top players.");
   }
 }
 
