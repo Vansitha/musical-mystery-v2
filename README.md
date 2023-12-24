@@ -22,11 +22,11 @@ Guess the correct song among three options within a time limit to earn points. E
 
 I thought it was a cool and enjoyable side project to work on. Initially, I loosely designed the idea using Figma (not being a UI/UX person myself). I built the first version when I initialy started learning React—[check it out here](https://github.com/Vansitha/musical-mystery). During the development of version 1, I encountered various issues and eventually decided to abandon it. However, I didn't want the idea to go to waste. So, I revamped the UI and created version 2 with a more robust structure. I am open to feedback and suggestions for improvements! 😄
 
-## Why not host it?
+## Why not depoly it?
 
 Regrettably, I am unable to host and make it accessible to users because Spotify only grants API keys for development. Although it's possible to request full access, Spotify does not extend its quota to accommodate apps classified as "hobby projects" or "games" 😟.
 
-## Using app locally
+## Using it locally
 
 First, clone or download the project to your system:
 
